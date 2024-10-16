@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的第一个Go Web开发</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script src="/static/js/commen.js"></script>
+</head>
+<body>
+    
+<h1>感谢大家支持</h1>
+
+获取后端的数据为:
+{{.msg}}
+
+<form action="/user/add" method="post">
+    <p>username: <input type="text" name="username"></p>
+    <p>password: <input type="text" name="password"></p>
+
+    <button type="submit">提交</button>
+</form>
+
+</body>
+</html>
