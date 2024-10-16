@@ -1,0 +1,27 @@
+; 练习a: x + y
+
+DATA SEGMENT 
+    X DW 1234H
+    Y DW 2345H
+    Z DW ?
+DATA ENDS
+
+STACK SEGMENT
+
+STACK ENDS
+
+CODE SEGMENT
+    ASSUME DS: DATA, SS:STACK, CS:CODE
+    MAIN:
+    MOV AX, DATA
+    MOV DS, AX
+
+    MOV AX, X   ;X 放入 AX
+    ADD AX, Y   ;AX += Y
+    MOV Z, AX   ;AX 放入 Z
+
+    MOV AH,4CH  ;程序固定退出指令
+    INT 21H
+CODE ENDS
+END MAIN
+

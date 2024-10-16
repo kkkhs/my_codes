@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <style>
+      body {
+        min-width: 600px;
+      }
+      .container {
+        padding: 0 200px;
+      }
+      .column {
+        /* important */
+        float: left;
+      }
+      .center {
+        background-color: beige;
+        /* important */
+        width: 100%;
+      }
+      .left {
+        background-color: blue;
+        /* important */
+        position: relative;
+        width: 200px;
+        margin-left: -100%;
+        right: 200px;
+      }
+      .right {
+        background-color: aqua;
+        /* important */
+        width: 200px;
+        margin-right: -200px;
+      }
+
+      .clearfix::after {
+        content: '';
+        display: table;
+        clear: both;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container clearfix">
+      <div class="center column">center</div>
+      <div class="left column">left</div>
+      <div class="right column">right</div>
+    </div>
+  </body>
+</html>
