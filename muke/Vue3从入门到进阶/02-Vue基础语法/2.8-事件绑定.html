@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lesson 12</title>
+  <script src="https://cdn.staticfile.org/vue/3.2.36/vue.global.min.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+</body>
+<script>
+  const app = Vue.createApp({
+    data(){
+      return{
+        counter: 0,
+      }
+    },
+    methods:{
+      handleDivClick(){
+        alert('div click')
+      },
+      handleBtnClick(){
+        // console.log(event.target)
+        // this.counter += 1;
+        alert(1);
+      },
+      handleBtnClick1(num, event){
+        alert(2);
+        console.log(event.target)
+        this.counter += num;
+      },
+    
+      handlerKeyDown(){
+        console.log("key down")
+      },
+
+      handlerClick(){
+        console.log('mouse click')
+      }
+    },
+    // event, $event
+    // (), ()
+    // 事件修饰符: stop, prevent, capture, self, once, passive
+    // 按键修饰符: enter, tab, delete, esc, up, down, left, right
+    // 鼠标修饰符: left, right, middle
+    // 精确修饰符: exact
+    template: `
+      <div @click.self="handleDivClick">
+        {{counter}}
+        <button @click.stop="handleBtnClick(), handleBtnClick1(2, $event)">button</button>
+      </div>
+
+      <div>
+        <input @keydown.enter="handlerKeyDown"/>  
+      </div>
+
+      <div>
+        <div @click.middle.ctrl.exact="handlerClick">123</div>  
+      </div>
+    `
+  });
+
+  const vm = app.mount('#root');
+   
+</script>
+</html>

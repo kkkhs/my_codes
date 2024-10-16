@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lesson 19</title>
+  <script src="https://cdn.staticfile.org/vue/3.2.36/vue.global.min.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+</body>
+<script>
+  // No-props属性
+  const app = Vue.createApp({
+    data(){
+      return {
+        count: 'a',
+        count1: 1,
+      }
+    },
+    template: `
+      <div>
+        <counter v-model:count.captalize="count" v-model:count1="count1"/>
+      </div>
+    `
+  });
+
+  app.component('counter', {
+    props: ['count', 'count1'],
+    methods:{
+      handelItemClick(){
+        this.$emit('update:count', this.count + 'b')
+      },
+      handelItemClick1(){
+        this.$emit('update:count1', this.count1 + 3)
+      }
+    },
+    template: `
+      <div @click="handelItemClick">{{count}}</div>
+      <div @click="handelItemClick1">{{count1}}</div>
+    `
+  })
+
+  const vm = app.mount('#root');
+
+</script>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lesson 23</title>
+  <script src="https://cdn.staticfile.org/vue/3.2.36/vue.global.min.js"></script>
+  <style>
+    /* 关键帧 */
+    @keyframes shake {
+      0%{
+        transform: translateX(-100px);
+      }
+      50%{
+        transform: translateX(-50px);
+      }
+      100%{
+        transform: translateX(50px);
+      }
+    }
+    .v-enter-from{
+      color: red;
+    }
+    .v-enter-active{
+      animation: shake 10s;
+      transition: all 3s ease-in;
+    }
+
+    .v-leave-from{
+      color: black;
+    }
+    .v-leave-active{
+      animation: shake 10s;
+      transition: all 3s ease-in;
+      color: red;
+    }
+    
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+</body>
+<script>
+  // 单元素/单组件的入场出场动画
+  const app = Vue.createApp({
+    data(){
+      return {
+        show: false
+      }
+    },
+    methods:{
+      handleClick(){
+        this.show = !this.show
+      },
+      handleBeforeEnter(el){
+        el.style.color = 'red'
+      },
+
+      handleEnterActive(el, done){
+        const animation =  setInterval(() => {
+          el.style.color = (el.style.color === 'red' ? 'blue' : 'red');
+        }, 1000)
+        setTimeout(() => {
+          clearInterval(animation);
+          // 告诉系统动画结束了
+          done()
+        }, 3000);
+      },
+      handleEnterEnd(){
+        alert(123)
+      }
+    },
+    // 控制动画或过渡的时间
+    // type="transition"
+    // :duration= "{enter: 1000, leave: 3000}"
+    template: `
+    <div>
+      <transition 
+        :css="false"
+        @before-enter="handleBeforeEnter"
+        @enter="handleEnterActive"
+        @after-enter="handleEnterEnd"
+        @before-leave=""
+        @leave=""
+        @after-leave=""
+      >
+        <div v-show="show">hello world</div>
+      </transition>
+      <button @click="handleClick">切换</button>
+    </div>
+    `
+  });
+
+  const vm = app.mount('#root');
+
+</script>
+</html>

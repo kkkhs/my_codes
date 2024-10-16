@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lesson 25</title>
+  <script src="https://cdn.staticfile.org/vue/3.2.36/vue.global.min.js"></script>
+  <style>
+    .v-enter-from{
+      opacity: 0;
+    }
+    .v-enter-active{
+      transition: all 3s ease-in;
+    }
+    .v-enter-to{
+      opacity: 1;
+    }
+
+    .v-leave-from{
+      opacity: 1;
+    }
+    .v-leave-active{
+      transition: all 3s ease-in;
+    }
+    .v-leave-to{
+      opacity: 0;
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+</body>
+<script>
+  // 多个单元素之间的切换
+  // 多个单组件之间的切换
+  const componentA= {
+    template: '<div>hello world </div>'
+  }
+  const componentB= {
+    template: '<div>bye world </div>'
+  }
+
+  const app = Vue.createApp({
+    data(){
+      return {component: 'component-a'}
+    },
+    methods:{
+      handleClick(){
+        this.component = this.component === 'component-a' ? 'component-b' : 'component-a';
+      },
+    },
+    components:{
+      'component-a': componentA,
+      'component-b': componentB,
+    },
+    template: `
+    <div>
+      <transition mode="out-in" appear>
+        <component :is="component" />
+      </transition>
+      <button @click="handleClick">切换</button>
+    </div>
+    `
+  });
+
+  const vm = app.mount('#root');
+
+</script>
+</html>

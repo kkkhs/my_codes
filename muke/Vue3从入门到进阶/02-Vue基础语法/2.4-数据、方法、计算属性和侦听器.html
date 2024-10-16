@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lesson 8</title>
+  <script src="https://cdn.staticfile.org/vue/3.2.36/vue.global.min.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+</body>
+<script>
+  //data & methods & computed & watcher
+  const app = Vue.createApp({
+    data(){
+      return{
+        message: 'hello world',
+        count: 2,
+        price: 5,
+        newTotal: 10,
+        // total: count * price,     不能在data里计算
+      }
+    },
+    //侦听器
+    watch: {
+      //解决异步问题
+      price(current, prev){    //给变量price添加侦听器
+        console.log(current, prev)
+        setTimeout(() => {
+          console.log('price changed')
+        }, 3000);
+
+        this.newTotal = current * this.count;
+      }
+    },
+    //计算属性(高效, 优先选择) 
+    computed:{
+      //当计算属性依赖的内容发生变更时，才会重新执行计算
+      total(){
+        // return this.count * this.price;
+        return Date.now();
+      }
+    },
+    methods: {
+      handleClick() {
+        console.log('Click', this.message)
+      },
+      formatString(string){
+        return string.toUpperCase();
+      },
+      //只要页面重新渲染，就会重新计算
+      getTotal(){
+        // return this.count * this.price;
+        return Date.now();
+      },
+    },
+    template: `
+    <div @click="handleClick">{{formatString(message)}} {{ newTotal }}</div>
+    `
+  });
+
+  const vm = app.mount('#root');
+   
+</script>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lesson 35</title>
+  <script src="https://cdn.staticfile.org/vue/3.2.36/vue.global.min.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+</body>
+<script>
+  //原理: 通过proxy对数据进行封装，当数据变化时，触发模板等内容的更新
+  // 1、ref处理基础类型的数据
+  // 2、reactive处理非基础类型的数据
+
+  
+  const app = Vue.createApp({
+    template: `
+      <div>name: {{name}}</div>
+    `,
+    setup(props, context){
+      // const { ref } = Vue;
+      // // 'dell' --> proxy({value: 'dell'}) 的对象的响应式引用
+      // let name = ref('dell')
+      // setTimeout(() => {
+      //   name.value = 'lee'
+      // }, 2000);
+      // return {
+      //   name,
+      // }
+
+      const { reactive, readonly, toRefs } = Vue;
+      // { name: 'dell' } --> proxy({ name: 'dell' }) 对象的响应式引用
+      const nameObj = reactive({ name: 'dell' })
+      setTimeout(() => {
+        nameObj.name = 'lee'
+      }, 2000);
+
+      //使响应式对象中的属性具备响应式
+      // toRefs: proxy({name: 'dell'}) --> {name: proxy({value: 'dell'})}
+      const {name} = toRefs(nameObj)
+      return{
+        name
+      }
+    }
+  });
+
+  const vm = app.mount('#root');
+
+</script>
+</html>

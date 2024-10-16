@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lesson 27</title>
+  <script src="https://cdn.staticfile.org/vue/3.2.36/vue.global.min.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+</body>
+<script>
+  // 状态动画 1 -> 10 svg (数据控制内容展示)
+  const app = Vue.createApp({
+    data(){
+      return {
+        number: 1,
+        animateNumber: 1
+      }
+    },
+    methods:{
+      handleClick(){
+        this.number = 10;
+        if(this.animateNumber < this.number){
+          const animation = setInterval(() => {
+            this.animateNumber += 1;
+            if(this.animateNumber === this.number){
+              clearInterval(animation)
+            }
+          }, 100);
+        }
+      },  
+    },
+    template: `
+    <div>
+      <span>{{animateNumber}}</span>
+      <div>
+      <button @click="handleClick">增加</button>
+      </div>
+    </div>
+    `
+  });
+
+  const vm = app.mount('#root');
+
+</script>
+</html>

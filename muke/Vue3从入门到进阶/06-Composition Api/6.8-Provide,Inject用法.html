@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lesson 41</title>
+  <script src="https://cdn.staticfile.org/vue/3.2.36/vue.global.min.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+</body>
+<script>
+  // provide inject
+  // dom ref
+  const app = Vue.createApp({
+    setup(){
+      const { ref, provide, readonly } = Vue;
+      const name = ref('dell');
+
+      //单向数据流
+      provide('name', readonly(name));
+      provide('changeName', (value) => {
+        name.value = value;
+      })
+      
+      return {
+
+      }
+    },
+    template: `
+      <child />
+    `,
+  });
+
+  app.component('child', {
+    setup(){
+      const { inject } = Vue;
+      const name = inject('name', 'hello');
+      const changeName = inject('changeName');
+
+      return {
+        name,
+        changeName
+      }
+    },
+    template: `
+      <div @click="changeName('lee')">  
+        {{name}}
+      </div>
+    `
+  })
+
+  const vm = app.mount('#root');
+
+</script>
+</html>

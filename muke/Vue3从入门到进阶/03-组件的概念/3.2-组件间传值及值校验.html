@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lesson 15</title>
+  <script src="https://cdn.staticfile.org/vue/3.2.36/vue.global.min.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+</body>
+<script>
+  const app = Vue.createApp({
+    data(){
+      return{
+        // 动态参数
+        number: () => {alert(123)},
+      }
+    },
+    template: `
+      <div>
+        <test :content="number"/>
+      </div>
+    `
+  });
+
+  //type: String Boolean Array Object Function, Symbol
+  //required: 必填
+  //default: 默认值
+  app.component('test', {
+    // 组件传值(类型校验)
+    props: {
+      content: {
+        type: Function,
+        //高级校验(函数)
+        validator: function(value) {
+          return value < 1000
+        },
+        default: 789,
+      },
+    },
+    template: '<div>{{content}}</div>'
+  })
+
+  const vm = app.mount('#root');
+
+</script>
+</html>

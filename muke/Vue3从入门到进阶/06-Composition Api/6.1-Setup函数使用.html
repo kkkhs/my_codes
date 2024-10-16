@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lesson 34</title>
+  <script src="https://cdn.staticfile.org/vue/3.2.36/vue.global.min.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+</body>
+<script>
+
+  const app = Vue.createApp({
+    methods: {
+      test() {
+        console.log(this.$options.setup())
+      }
+    },
+    template: `
+      <div @click="handleClick">name: {{name}}</div>
+    `,
+    mounted(){
+      this.test();
+    },
+    //created 实例被完全初始化之前
+    setup(props, context){
+      return {
+        name: 'dell',
+        handleClick: () => {
+          alert(123)
+        },
+
+      }
+    }
+  });
+
+  const vm = app.mount('#root');
+
+</script>
+</html>

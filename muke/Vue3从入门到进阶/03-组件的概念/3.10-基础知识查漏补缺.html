@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lesson 22</title>
+  <script src="https://cdn.staticfile.org/vue/3.2.36/vue.global.min.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+</body>
+<script>
+
+  // v-once: 让某个标签只渲染一次
+  // ref: 获取dom节点或者组件引用的语法
+  // provide/ inject: 一次性传递
+  const app = Vue.createApp({
+    data(){
+      return {
+        count: 1
+      }
+    },
+    provide(){
+      return{
+        count: this.count
+      }
+    },
+    mounted(){
+      console.log(this.$refs.count)
+      console.log(this.$refs.common.sayHello())
+    },
+    template: `
+      <div ref="count">
+        {{count}}
+      </div>
+      <common-item ref="common"/>
+      <child :count="count" />
+      <button @click="count += 1">增加</button>
+    `
+  });
+
+  app.component('common-item', {
+    methods:{
+      sayHello(){
+        alert('hello')
+      }
+    },
+    template: `
+      <div>
+        hello world
+      </div>
+    `
+  })
+  app.component('child', {
+    inject: ['count'],
+    template: `
+      <div>
+        {{count}}
+      </div>
+    `
+  })
+
+  const vm = app.mount('#root');
+
+</script>
+</html>

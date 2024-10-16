@@ -1,0 +1,17 @@
+{
+  "name": "ele-h5-server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon --dalay 1000ms ./src/app.js"
+  },
+  "author": "kkkhs",
+  "license": "ISC",
+  "devDependencies": {
+    "json-server": "^1.0.0-alpha.11",
+    "nodemon": "^3.0.2"
+  },
+  "keywords": [],
+  "description": ""
+}

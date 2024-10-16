@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lesson 36</title>
+  <script src="https://cdn.staticfile.org/vue/3.2.36/vue.global.min.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+</body>
+<script>
+
+  const app = Vue.createApp({
+    methods: {
+      handleChange(){
+        alert(1)
+      }
+    },
+    template: `
+      <child @change="handleChange" app="app">parents</child>
+    `,
+    // setup(props, context){
+    //   const { reactive, readonly, toRefs, toRef } = Vue;
+    //   const data = reactive({ name: 'dell' })
+    //   //如果data里没有age, 则默认给age空, 且具备响应式
+    //   const age = toRef(data, 'age')
+    //   setTimeout(() => {
+    //     age.value = 'lee'
+    //   }, 2000);
+    //   return{
+    //     age
+    //   }
+    // }
+  });
+
+  app.component('child', {
+    template: `
+      <div @click="handleClick">child</div>
+    `,
+    mounted(){
+      console.log(this.$slots)
+    },
+    setup(props, context){
+      const { h } = Vue;
+
+      const {attrs, slots, emit} = context
+      console.log(attrs.app)  // No-props属性
+      console.log(slots.default())  // slots属性
+      function handleClick() { emit('change') }
+      // return () => h('div', {}, slots.default())
+      return {handleClick}
+    }
+  })
+
+  const vm = app.mount('#root');
+
+</script>
+</html>

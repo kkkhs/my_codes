@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lesson 20</title>
+  <script src="https://cdn.staticfile.org/vue/3.2.36/vue.global.min.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+</body>
+<script>
+  // slot插槽
+  // 具名插槽 v-slot:name
+  const app = Vue.createApp({
+    data(){
+      return {
+        text: '提交'
+      }
+    },
+    template: `
+    <myForm>
+      <div>{{text}}</div>  
+    </myForm>
+
+    <myForm>
+      <button>{{text}}</button>
+    </myForm>
+
+    <hr>
+
+    <layout>
+      <template v-slot:header>
+        <div> header </div>
+      </template>
+
+      <template v-slot:footer>
+        <div> footer </div>
+      </template>
+    </layout>
+    `
+  });
+
+  app.component('myForm', {
+    methods: {
+      handleClick(){
+        alert(123)
+      }
+    },
+    template: `
+      <div>
+        <input />
+        <span @click="handleClick">
+          <slot>default value</slot>
+        </span>
+      </div>
+    `
+  })
+
+  //具名插槽
+  app.component('layout', {
+    template: `
+      <div>
+        <slot name="header"> </slot>
+        <div>content</div>
+        <slot name="footer"> </slot>
+      </div>
+    `
+  })
+
+  const vm = app.mount('#root');
+
+</script>
+</html>

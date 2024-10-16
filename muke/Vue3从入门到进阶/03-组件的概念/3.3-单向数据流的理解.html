@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lesson 16</title>
+  <script src="https://cdn.staticfile.org/vue/3.2.36/vue.global.min.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+</body>
+<script>
+  //属性传的时候使用-连接(html), 接收的时候使用驼峰命名法(js)
+  //单向数据流: 子组件不能修改传递过来的数据
+  const app = Vue.createApp({
+    data(){
+      return{
+        params: {
+          number: 123,
+          a: 123,
+          b: 456,
+          c: 789
+        },
+        count: 0,
+      }
+    },
+    template: `
+      <div>
+        <test :content="count" />
+      </div>
+    `
+  });
+
+  app.component('test', {
+    props: ['content'],
+    data(){
+      return{
+        myCount: this.content
+      }
+    },
+    template: '<div @click="myCount++">{{myCount}}</div>'
+  })
+
+  const vm = app.mount('#root');
+
+</script>
+</html>

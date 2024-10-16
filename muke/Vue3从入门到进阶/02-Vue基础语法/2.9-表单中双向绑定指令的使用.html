@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lesson 13</title>
+  <script src="https://cdn.staticfile.org/vue/3.2.36/vue.global.min.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+</body>
+<script>
+  const app = Vue.createApp({
+    data(){
+      return{
+        flag: true,
+        message: [],
+        message2: '',
+        options:[
+          {text: 'A', value: {value: 'A'},},  //数据转化
+          {text: 'B', value: 'B',},
+          {text: 'C', value: 'C',},
+        ],
+      }
+    },
+    methods:{
+      
+    },
+    // input, textarea, checkbox, radio, select
+    // v-model修饰符: lazy, number, trim
+    template: `
+      <div>
+        {{message}}
+        <input v-model.trim="message"/> 
+      </div>
+
+      <div>
+        <textarea v-model="message"/> 
+      </div>
+
+      <div>
+        jack<input type="checkbox" v-model="message" value="jack"/> 
+        lee<input type="checkbox" v-model="message" value="lee"/> 
+        dell<input type="checkbox" v-model="message" value="dell"/> 
+      </div>
+      
+      <div>
+        {{message2}} --
+        jack<input type="radio" v-model="message2" value="jack"/> 
+        lee<input type="radio" v-model="message2" value="lee"/> 
+        dell<input type="radio" v-model="message2" value="dell"/> 
+      </div>
+
+      <div>
+        {{message}}
+        <select v-model="message" multiple>
+          <option disabled value=''>请选择内容</option>  
+          <option v-for="item in options" :value="item.value">{{item.text}}</option>  
+        </select>
+      </div>
+
+      <div>
+        {{flag}}
+        <input type="checkbox" v-model="flag" true-value="hello" false-value="world"/> 
+      </div>
+    `
+  });
+
+  const vm = app.mount('#root');
+   
+</script>
+</html>

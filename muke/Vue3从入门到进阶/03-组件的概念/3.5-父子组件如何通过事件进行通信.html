@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lesson 18</title>
+  <script src="https://cdn.staticfile.org/vue/3.2.36/vue.global.min.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+</body>
+<script>
+  // No-props属性
+  const app = Vue.createApp({
+    data(){
+      return {
+        count: 1,
+      }
+    },
+    methods:{
+      handlerAdd(param, param2){
+        this.count += param2;
+      }
+    },
+    //父级监听事件
+    template: `
+      <div>
+        <counter v-model="count" />
+      </div>
+    `
+  });
+
+  app.component('counter', {
+    props: ['modelValue'],
+    //向上触发事件的合集
+    emits: {
+      // 检验参数
+      update: (count) => {
+        return count > 0
+      }
+    },
+    methods:{
+      handelItemClick(){
+        // 触发自身事件
+        this.$emit('update:modelValue', this.modelValue + 3)
+      }
+    },
+    template: `
+      <div @click="handelItemClick">{{modelValue}}</div>
+    `
+  })
+
+  const vm = app.mount('#root');
+
+</script>
+</html>

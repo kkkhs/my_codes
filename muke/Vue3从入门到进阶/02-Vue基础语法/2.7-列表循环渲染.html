@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lesson 11</title>
+  <script src="https://cdn.staticfile.org/vue/3.2.36/vue.global.min.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+</body>
+<script>
+  const app = Vue.createApp({
+    data(){
+      return{
+        listArray: ['dell', 'lee', 'teacher'],
+        listObject: {
+          firstName: 'dell',
+          lastName: 'lee',
+          job: 'teacher'
+        }
+      }
+    },  
+    methods:{
+      handleAddBtnClick(){
+        //1、使用变更函数
+        // this.listArray.push('hello')
+        // this.listArray.pop
+        // this.listArray.shift()
+        // this.listArray.unshift('hello')
+        // this.listArray.reverse()
+
+        //2、直接替换数组
+        // this.listArray = ['bye', 'world']
+        // this.listArray = ['bye'].concat(['world'])
+        // this.listArray = ['bye', 'world'].filter(item => item === 'bye')
+
+        //3、直接更新数组的内容
+        this.listArray[1] = 'hello'
+
+        //直接添加对象的内容
+        this.listObject.age = 100
+        this.listObject.sex = 'male'
+      }
+    },
+    template: `
+      <div>
+        <template v-for="(item, index) in listArray" :key="index">
+          <div v-if="index != 1">
+            {{index}}--{{item}}
+          </div>
+        </template>
+        <hr>
+        <div v-for="(value, key, index) in listObject" :key="index">
+          {{key}} -- {{value}}
+        </div>
+        <hr>
+        <div v-for="item in 10" :key="item">
+          {{item}}
+        </div>
+        <button @click="handleAddBtnClick">新增</button>
+      </div>
+    `
+  });
+
+  const vm = app.mount('#root');
+   
+</script>
+</html>

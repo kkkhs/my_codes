@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lesson 41</title>
+  <script src="https://cdn.staticfile.org/vue/3.2.36/vue.global.min.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+</body>
+<script>
+  // provide inject
+  // dom ref 得到dom节点
+  const app = Vue.createApp({
+    setup(){
+      const { ref, onMounted } = Vue;
+      
+      // 固定语法(名字一致)
+      const hello = ref(null);
+      onMounted(() => {
+        console.log(hello.value)
+      })
+      return {
+        hello
+      }
+    },
+    template: `
+      <div ref="hello"> hello </div>
+    `,
+  });
+
+  const vm = app.mount('#root');
+
+</script>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lesson 4</title>
+  <script src="https://cdn.staticfile.org/vue/3.2.36/vue.global.min.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+</body>
+<script>
+  const app = Vue.createApp({
+    data(){
+      return {
+        inputValue: '',
+        list: []
+      }
+    },
+    methods: {
+      handleAddItem(){
+        this.list.push(this.inputValue);
+        this.inputValue = '';
+      }
+    },
+    template: `
+      <div>
+        <input v-model="inputValue"/>
+        <button v-on:click="handleAddItem" v-bind:title="inputValue">
+          增加 {{inputValue}}
+        </button>
+        <ul>
+          <todo-item v-for="(item, index) of list" v-bind:content="item" v-bind:index="index"/>
+        </ul>
+      </div>
+    `
+  });
+
+  //创建组件
+  app.component('todo-item', {
+    props: ['content', 'index'],
+    template: '<li>{{ index }} -- {{ content }}</li>'
+  });
+
+  app.mount('#root');
+   
+</script>
+</html>

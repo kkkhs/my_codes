@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lesson 26</title>
+  <script src="https://cdn.staticfile.org/vue/3.2.36/vue.global.min.js"></script>
+  <style>
+    .list-item{
+      display: inline-block;
+      margin-right: 10px;
+    }
+
+    /* 增加时 */
+    .v-enter-from{
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    .v-enter-active{
+      transition: all .5s ease-in;
+    }
+    .v-enter-to{
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* 其他列表项移动时 */
+    .v-move{
+      transition: all .5s ease-in;
+    }
+
+    .v-leave-from{
+      opacity: 1;
+    }
+    .v-leave-active{
+      transition: all .5s ease-in;
+    }
+    .v-leave-to{
+      opacity: 0;
+      transform: translateY(30px);
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+</body>
+<script>
+  // 列表动画的实现 transition-group
+  const app = Vue.createApp({
+    data(){
+      return {list: [1, 2, 3]}
+    },
+    methods:{
+      handleClick(){
+        this.list.unshift(this.list.length + 1);
+      },
+      handleClick2(){
+        this.list.pop();
+      }    
+    },
+    template: `
+    <div>
+      <transition-group>
+        <span class="list-item" v-for="item in list" :key="item">{{item}}</span>
+      </transition-group>
+      <div>
+        <button @click="handleClick">增加</button>
+        <button @click="handleClick2">移除</button>
+      </div>
+    </div>
+    `
+  });
+
+  const vm = app.mount('#root');
+
+</script>
+</html>

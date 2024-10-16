@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lesson 14</title>
+  <script src="https://cdn.staticfile.org/vue/3.2.36/vue.global.min.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+</body>
+<script>
+
+  // 局部组件定义
+  const counter = {
+    data(){
+      return{
+        count: 1,
+      }
+    },
+    template: '<div @click="count += 1">{{count}}</div>'
+  }
+
+  const helloWorld = {
+    template: '<div>hello world</div>'
+  }
+
+  //根组件
+  const app = Vue.createApp({
+    data(){
+      return{
+        count: 1,
+      }
+    },
+    // 局部组件注册使用(高性能)
+    components:{
+      counter2: counter,
+      helloWorld
+    },
+    template: `
+      <div>
+        <counter-parent />
+        <counter />
+        <counter2 />
+        <helloWorld />
+        <hello-world />
+      </div>
+    `
+  });
+
+  // 全局组件(影响性能)
+  app.component('counter-parent', {
+    template: '<counter />'
+  })
+
+  app.component('counter', {
+    data(){
+      return{
+        count: 1,
+      }
+    },
+    template: '<div @click="count += 1">{{count}}</div>'
+  })
+
+
+
+  const vm = app.mount('#root');
+
+</script>
+</html>

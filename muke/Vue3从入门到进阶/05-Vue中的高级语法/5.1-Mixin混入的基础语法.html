@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lesson 28</title>
+  <script src="https://cdn.staticfile.org/vue/3.2.36/vue.global.min.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+</body>
+<script>
+  //mixin 混入 创建
+  //组件的data、methods、自定义属性优先级高于Mixin的data、methods、自定义属性优先级
+  //生命周期函数先执行Mixin里的，后执行app里的
+
+  //局部Mixin
+  const myMixin = {
+    number: 1,
+    data(){
+      return{
+        number: 2,
+        // count: 123
+      }
+    },
+    // created(){
+    //   console.log('mixin created')
+    // },
+    // methods:{
+    //   handleClick(){
+    //     console.log('mixin handleClick')
+    //   },  
+    // }
+  }
+
+  const app = Vue.createApp({
+    number: 2,
+    data(){
+      return {
+        number: 1,
+      }
+    },
+    //加入vue
+    mixins: [myMixin],
+
+    methods:{
+      handleClick(){
+        console.log('handleClick')
+      },  
+    },
+    // created(){
+    //   console.log('created')
+    // },
+    template: `
+    <div>
+      <span>{{number}}</span>
+      <span>{{this.$options.number}}</span>
+      <div>
+      <button @click="handleClick">增加</button>
+      </div>
+    </div>
+    `
+  });
+
+  //修改策略中的自定义属性优先级
+  app.config.optionMergeStrategies.number = (mixinVal, appValue) => {
+    return mixinVal || appValue;
+  }
+
+  // //全局mixin
+  // app.mixin({
+  //   data(){
+  //     return{
+  //       number: 2,
+  //       count: 123
+  //     }
+  //   },
+  //   created(){
+  //     console.log('mixin created')
+  //   },
+  //   methods:{
+  //     handleClick(){
+  //       console.log('mixin handleClick')
+  //     },  
+  //   }
+  // })
+
+  // app.component('child', {
+  //   // mixins: [myMixin],
+  //   template: '<div>{{count}}</div>'
+  // })
+
+
+  const vm = app.mount('#root');
+
+</script>
+</html>

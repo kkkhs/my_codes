@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lesson 32</title>
+  <script src="https://cdn.staticfile.org/vue/3.2.36/vue.global.min.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+</body>
+<script>
+  //plugin 插件 把通用性的功能封装起来
+  const myPlugin = {
+    install(app, options){
+      app.provide('name', 'dell lee')
+      app.directive('focus', {
+        mounted(el){
+          el.focus();
+        }
+      })
+      app.config.globalProperties.$sayHello = 'hello world';
+      console.log(app, options)
+    }
+  }
+
+  const app = Vue.createApp({
+    data(){
+      return {
+        show: false
+      }
+    },
+    template: `
+      <my-title />
+    `
+  });
+  
+  app.component('my-title', {
+    inject: ['name'],
+    template: `
+      <h1> {{name}} </h1>
+      <h1> {{this.$sayHello}} </h1>
+      <input v-focus />
+    `
+  })
+
+  app.use(myPlugin, {name: 'dell'})
+
+  const vm = app.mount('#root');
+
+</script>
+</html>

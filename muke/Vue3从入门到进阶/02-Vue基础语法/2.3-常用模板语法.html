@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lesson 7</title>
+  <script src="https://cdn.staticfile.org/vue/3.2.36/vue.global.min.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+</body>
+<script>
+  const app = Vue.createApp({
+    data(){
+      return{
+        disable: true, 
+        message: 'hello world',
+        name: 'title',     //动态属性
+        event: 'click'
+      }
+    },
+    methods: {
+      handleClick(e){
+        e.preventDefault();   //阻止默认行为
+      }
+    },
+    // {{}}中解析js表达式
+    template: `
+    <input v-bind:disabled="disable" v-if="disable"/>
+    <div v-html="message" :[name]="message" v-once @[event]="handleClick"></div>
+
+    <form action="https://www.baidu.com" @click.prevent="handleClick">
+      <button type="submit">提交</button>  
+    </form>
+    `
+  });
+
+  const vm = app.mount('#root');
+   
+</script>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lesson 30</title>
+  <style>
+    .area{
+      position: absolute;
+      width: 200px;
+      height: 300px;
+      background: green;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .mask{
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      background: black;
+      opacity: 0.5;
+    }
+  </style>
+  <script src="https://cdn.staticfile.org/vue/3.2.36/vue.global.min.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+</body>
+<script>
+  // teleport 传送门
+  const app = Vue.createApp({
+    data(){
+      return {
+        show: false
+      }
+    },
+    methods: {
+      handleBtnClick(){
+        this.show = ! this.show;
+      }
+    },
+    template: `
+    <div class="area">
+      <button @click="handleBtnClick">按钮</button>
+      <teleport to="body">
+        <div class="mask" v-show="show"></div>
+      </teleport>
+    </div>
+    `
+  });
+
+  const vm = app.mount('#root');
+
+</script>
+</html>
